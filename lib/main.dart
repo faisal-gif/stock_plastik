@@ -9,10 +9,11 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Tambahkan Plastik',
+      
       theme: ThemeData(
         primarySwatch: Colors.grey,
       ),
       home: Home(),
     );
   }
-}
+} 

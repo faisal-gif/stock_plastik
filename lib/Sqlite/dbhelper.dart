@@ -1,66 +1,86 @@
-import 'package:flutter/material.dart';
+import 'package:sqflite/sqflite.dart';
+import 'dart:async';
+import 'dart:io';
+import 'package:path_provider/path_provider.dart';
+import '../item.dart';
 
-void main() {
-  runApp(MyApp());
-}
+class DbHelper {
+  static DbHelper _dbHelper;
+  static Database _database;
+  DbHelper._createObject();
+  Future<Database> initDb() async {
+    //untuk menentukan nama database dan lokasi yg dibuat
+    Directory directory = await getApplicationDocumentsDirectory();
+    String path = directory.path + 'item.db';
 
-class MyApp extends StatelessWidget {
-  // This widget is the root of your application.
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: MyHomePage(title: 'Flutter Demo Home Page'),
-    );
-  }
-}
+    //create, read databases
+    var itemDatabase = openDatabase(path, version: 4, onCreate: _createDb);
 
-class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key, this.title}) : super(key: key);
-
-  final String title;
-
-  @override
-  _MyHomePageState createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
+    //mengembalikan nilai object sebagai hasil dari fungsinya
+    return itemDatabase;
   }
 
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text(
-              'You have pushed the button this many times:',
-            ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headline4,
-            ),
-          ],
-        ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: Icon(Icons.add),
-      ),
-    );
+  //buat tabel baru dengan nama item
+  void _createDb(Database db, int version) async {
+    await db.execute('''
+ CREATE TABLE item (
+ id INTEGER PRIMARY KEY AUTOINCREMENT,
+ nama TEXT,
+ harga INTEGER
+ stock INTEGER
+ )
+ ''');
+  }
+
+//select databases
+  Future<List<Map<String, dynamic>>> select() async {
+    Database db = await this.initDb();
+    var mapList = await db.query('item', orderBy: 'nama');
+    return mapList;
+  }
+
+//create databases
+  Future<int> insert(Item object) async {
+    Database db = await this.initDb();
+    int count = await db.insert('item', object.toMap());
+    return count;
+  }
+
+//update databases
+  Future<int> update(Item object) async {
+    Database db = await this.initDb();
+    int count = await db
+        .update('item', object.toMap(), where: 'id=?', whereArgs: [object.id]);
+    return count;
+  }
+
+//delete databases
+  Future<int> delete(int id) async {
+    Database db = await this.initDb();
+    int count = await db.delete('item', where: 'id=?', whereArgs: [id]);
+    return count;
+  }
+
+  Future<List<Item>> getItemList() async {
+    var itemMapList = await select();
+    int count = itemMapList.length;
+    List<Item> itemList = List<Item>();
+    for (int i = 0; i < count; i++) {
+      itemList.add(Item.fromMap(itemMapList[i]));
+    }
+    return itemList;
+  }
+
+  factory DbHelper() {
+    if (_dbHelper == null) {
+      _dbHelper = DbHelper._createObject();
+    }
+    return _dbHelper;
+  }
+  Future<Database> get database async {
+    if (_database == null) {
+      _database = await initDb();
+    }
+    return _database;
   }
 }

@@ -1,17 +1,21 @@
 import 'package:flutter/material.dart';
 import 'dart:async';
 import 'package:sqflite/sqflite.dart';
-import '../item.dart';
-import 'dbhelper.dart';
+import 'item.dart';
+import '../Sqlite/dbhelper.dart';
 import 'entryform.dart';
+import '../menu.dart';
 
-//pendukung program asinkron
-class Home extends StatefulWidget {
+//pendukung program 
+class Homeitem extends StatefulWidget {
+  static const itemPage = '/home';
+
+  static var homestock;
   @override
   HomeState createState() => HomeState();
 }
 
-class HomeState extends State<Home> {
+class HomeState extends State<Homeitem> {
   DbHelper dbHelper = DbHelper();
   int count = 0;
   List<Item> itemList;
@@ -59,7 +63,6 @@ class HomeState extends State<Home> {
     }));
     return result;
   }
-
   ListView createListView() {
     TextStyle textStyle = Theme.of(context).textTheme.headline5;
     return ListView.builder(
@@ -81,16 +84,17 @@ class HomeState extends State<Home> {
             trailing: GestureDetector(
               child: Icon(Icons.delete),
               onTap: () async {
-                //TODO 3 memanggil Fungsi untuk Delete dari DB berdasarkan Item
 
-                dbHelper.delete(this.itemList[index].id);
+                //TODO 3 memanggil Fungsi untuk Delete dari DB berdasarkan Item
+               dbHelper.delete(this.itemList[index].id);
                 updateListView();
               },
             ),
             onTap: () async {
               var item =
                   await navigateToEntryForm(context, this.itemList[index]);
-              //TODO 4 Panggil Fungsi untuk Edit data
+             
+              //TODO 4 Untuk Memanggil Fungsi untuk Edit data
               if (item != null) {
                 dbHelper.update(item);
                 updateListView();
@@ -102,10 +106,11 @@ class HomeState extends State<Home> {
     );
   }
 
-  //update List item
+ //update untuk List item
   void updateListView() {
     final Future<Database> dbFuture = dbHelper.initDb();
     dbFuture.then((database) {
+
       //TODO 1 Select data dari DB
       Future<List<Item>> itemListFuture = dbHelper.getItemList();
       itemListFuture.then((itemList) {

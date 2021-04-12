@@ -1,41 +1,39 @@
 import 'package:flutter/material.dart';
-import '../item.dart';
+import 'package:stock_plastik/stock/stock.dart';
 
 class EntryForm extends StatefulWidget {
-  final Item item;
-  EntryForm(this.item);
+  final Stock stock;
+  EntryForm(this.stock);
 
   @override
-  EntryFormState createState() => EntryFormState(this.item);
+  EntryFormState createState() => EntryFormState(this.stock);
 }
 
 //class controller
 class EntryFormState extends State<EntryForm> {
-  Item item;
-  EntryFormState(this.item);
+  Stock stock;
+  EntryFormState(this.stock);
   TextEditingController kodeController = TextEditingController();
   TextEditingController namaController = TextEditingController();
-  TextEditingController hargaController = TextEditingController();
+  TextEditingController jenisController = TextEditingController();
   TextEditingController stockController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
-    // Kondisi
-    if (item != null) {
-      kodeController.text = item.kode;
-      namaController.text = item.nama;
-      hargaController.text = item.harga.toString();
-      stockController.text = item.stock.toString();
+    //kondisi
+    if (stock != null) {
+      namaController.text = stock.nama;
+      stockController.text = stock.stock.toString();
     }
-    // Merubah
+    //rubah
     return Scaffold(
         appBar: AppBar(
-          title: item == null ? Text('Tambah') : Text('Ganti'),
-          backgroundColor: Colors.grey[800],
+          title: stock == null ? Text('Tambah') : Text('ganti'),
+          backgroundColor: Colors.yellow[600],
           leading: new IconButton(
             icon: new Icon(Icons.keyboard_arrow_left),
             onPressed: () {
-              Navigator.pop(context, item);
+              Navigator.pop(context, stock);
             },
           ),
         ),
@@ -43,110 +41,77 @@ class EntryFormState extends State<EntryForm> {
           padding: EdgeInsets.only(top: 15.0, left: 10.0, right: 10.0),
           child: ListView(
             children: <Widget>[
-              // KODE PLASTIK
-              Padding(
-                padding: EdgeInsets.only(top: 20.0, bottom: 20.0),
-                child: TextField(
-                  controller: kodeController,
-                  keyboardType: TextInputType.text,
-                  decoration: InputDecoration(
-                    labelText: 'Kode Plastik',
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(5.0),
-                    ),
-                  ),
-                  onChanged: (value) {
-                  },
-                ),
-              ),
-              // JENIS PLASTIK
+              // nama plastik
               Padding(
                 padding: EdgeInsets.only(top: 20.0, bottom: 20.0),
                 child: TextField(
                   controller: namaController,
                   keyboardType: TextInputType.text,
                   decoration: InputDecoration(
-                    labelText: 'Jenis Plastik',
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(5.0),
-                    ),
-                  ),
-                  onChanged: (value) 
-                    {
-                  },
-                ),
-              ),
-              // HARGA
-              Padding(
-                padding: EdgeInsets.only(top: 20.0, bottom: 20.0),
-                child: TextField(
-                  controller: hargaController,
-                  keyboardType: TextInputType.number,
-                  decoration: InputDecoration(
-                    labelText: 'Harga',
+                    labelText: 'Nama plastik',
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(5.0),
                     ),
                   ),
                   onChanged: (value) {
+                    //
                   },
                 ),
               ),
-              // STOCK
+              // stock
               Padding(
                 padding: EdgeInsets.only(top: 20.0, bottom: 20.0),
                 child: TextField(
                   controller: stockController,
                   keyboardType: TextInputType.number,
                   decoration: InputDecoration(
-                    labelText: 'Stock',
+                    labelText: 'stock',
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(5.0),
                     ),
                   ),
                   onChanged: (value) {
+                    //
                   },
                 ),
               ),
-              // TOMBOL UNTUK BUTON
+              //  button
               Padding(
                 padding: EdgeInsets.only(top: 20.0, bottom: 20.0),
                 child: Row(
                   children: <Widget>[
-                    // TOMBOL UNTUK SIMPAN 
+                    // tombol simpan
                     Expanded(
                       child: RaisedButton(
                         color: Theme.of(context).primaryColorDark,
                         textColor: Theme.of(context).primaryColorLight,
                         child: Text(
-                          'Simpan',
+                          'simpan',
                           textScaleFactor: 1.5,
                         ),
                         onPressed: () {
-                          if (item == null) {
-                            // MENAMBAH DATA 
-                            item = Item(
-                              kodeController.text,
+                          if (stock == null) {
+                            // tambah data
+                            stock = Stock(
                               namaController.text,
-                              int.parse(hargaController.text),
                               int.parse(stockController.text),
                             );
                           } else {
-                            // MENGUBAH DATA 
-                            item.nama = namaController.text;
-                            item.stock = int.parse(stockController.text);
-                            item.kode = kodeController.text;
-                            item.harga = int.parse(hargaController.text);
+                            // Mengubah data
+
+                            stock.nama = namaController.text;
+
+                            stock.stock = int.parse(stockController.text);
                           }
-                          // KE MENU AWAL
-                          Navigator.pop(context, item);
+                          // ke menu awal
+                          Navigator.pop(context, stock);
                         },
                       ),
                     ),
                     Container(
                       width: 5.0,
                     ),
-                    // TOMBOL UNTUK BATAL 
+                    // tombol batal
                     Expanded(
                       child: RaisedButton(
                         color: Theme.of(context).primaryColorDark,

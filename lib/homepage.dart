@@ -20,6 +20,7 @@ class Home extends StatelessWidget {
               child: Column(
                 children: <Widget>[
                   Container(
+                    
                     width: 80,
                     height: 100,
                     margin: EdgeInsets.only(

@@ -29,7 +29,7 @@ class EntryFormState extends State<EntryForm> {
     return Scaffold(
         appBar: AppBar(
           title: stock == null ? Text('Tambah') : Text('ganti'),
-          backgroundColor: Colors.yellow[600],
+          backgroundColor: Colors.grey[800],
           leading: new IconButton(
             icon: new Icon(Icons.keyboard_arrow_left),
             onPressed: () {

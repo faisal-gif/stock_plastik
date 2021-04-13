@@ -13,9 +13,9 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
         routes: {
            '/': (_) => Home(),
-          //Home.homepage: (_) => Home(),
           Homeitem.itemPage: (_) => Homeitem(),
           Homestock.homeStock: (_) => Homestock(),
         });
   }
 }
+

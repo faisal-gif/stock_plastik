@@ -20,25 +20,19 @@ class Home extends StatelessWidget {
               child: Column(
                 children: <Widget>[
                   Container(
-                    
                     width: 80,
                     height: 100,
                     margin: EdgeInsets.only(
                       top: 15,
                       bottom: 10,
-                      
                     ),
-                    
                     child: ListTile(
                       leading: CircleAvatar(
                         backgroundColor: Colors.blueGrey,
                         child: Icon(Icons.shopping_cart_outlined),
-        
                       ),
                     ),
-                    
                   ),
-                  
                 ],
               ),
             ),

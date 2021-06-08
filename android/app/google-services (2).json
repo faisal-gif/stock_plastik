@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "743746540308",
+    "project_id": "stockplastik",
+    "storage_bucket": "stockplastik.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:743746540308:android:6db6c88d8d8cc5f779e801",
+        "android_client_info": {
+          "package_name": "com.example.stock_plastik"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "743746540308-6ego356mf5lta96f4cuv4ekg50rnt6m4.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.stock_plastik",
+            "certificate_hash": "12ab24a7948c0a4358494d2c0f5ec09256de358a"
+          }
+        },
+        {
+          "client_id": "743746540308-1nt1dgpl3cabf3n073e6sk1njuhp3l4q.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDjBKgzWTMEMM4fo7N9e9--PdaTC6ALlF4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "743746540308-1nt1dgpl3cabf3n073e6sk1njuhp3l4q.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
